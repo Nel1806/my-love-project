@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Monthsary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+  <div class="scene" id="lockScene">
+    <h1 class="title">Happy Anniversary, Lablab!</h1>
+    <p class="subtitle">Enter our monthsary date</p>
+
+    <div class="card">
+      <div class="display">
+        <span id="display-text">&nbsp;</span>
+        <button class="arrow-btn" id="enterBtn" onclick="submitCode()">➜</button>
+      </div>
+
+      <div class="hint" id="hint">&nbsp;</div>
+
+      <div class="keypad">
+        <button class="heart-key" onclick="press('1')"><span>1</span></button>
+        <button class="heart-key" onclick="press('2')"><span>2</span></button>
+        <button class="heart-key" onclick="press('3')"><span>3</span></button>
+        <button class="heart-key" onclick="press('4')"><span>4</span></button>
+        <button class="heart-key" onclick="press('5')"><span>5</span></button>
+        <button class="heart-key" onclick="press('6')"><span>6</span></button>
+        <button class="heart-key" onclick="press('7')"><span>7</span></button>
+        <button class="heart-key" onclick="press('8')"><span>8</span></button>
+        <button class="heart-key" onclick="press('9')"><span>9</span></button>
+        <button class="heart-key delete" onclick="deleteLast()"><span>⌫</span></button>
+        <button class="heart-key" onclick="press('0')"><span>0</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene hidden" id="successScene">
+    <div class="success-page">
+      <span class="success-emoji">🎁</span>
+      <div class="hearts-row">💕 💝 💕</div>
+      <div class="success-title">Date Unlocked! 🔓</div>
+      <div class="success-msg">
+        Happy 7th Anniversary! 🌹<br>
+        Every Day and Every Month with you is a gift. ❤️
+      </div>
+      <a href="continue.html" class="gift-btn">Continue 🤍</a>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+html, body{
+  width:100%;
+  height:100%;
+  min-height:100%;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{
+  background-image: url("../images/heartbg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  width:100%;
+  overflow-x:hidden;
+
+  font-family:'Quicksand', sans-serif;
+
+  background-image: url("../images/heartbg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:inherit;
+  filter:blur(2px) brightness(0.8);
+  z-index:-1;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  /* cinematic color grading */
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.75)),
+    linear-gradient(180deg, rgba(255,0,80,0.15), rgba(0,0,0,0.85));
+
+  z-index:0;
+}
+
+
+/* ---------- Layout ---------- */
+.scene{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+
+  position:relative;
+  z-index:1;
+}
+
+
+.hidden{ display:none !important; }
+
+.title{
+  font-family:'Great Vibes', cursive;
+  font-size:clamp(30px, 6vw, 44px);
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.4);
+  margin-bottom:4px;
+}
+
+.subtitle{
+  color:rgba(255,255,255,.85);
+  font-size:12px;
+  letter-spacing:.4px;
+  margin-bottom:22px;
+}
+
+/* ---------- Card ---------- */
+.card{
+  width:260px;
+  max-width:100%;
+  padding:18px 18px 22px;
+
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+
+  border-radius:22px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+
+  animation:pop .5s ease;
+}
+
+@keyframes pop{
+  from{ transform:scale(.9); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
+}
+
+.card.shake{ animation:shake .4s ease; }
+
+@keyframes shake{
+  0%,100%{ transform:translateX(0); }
+  20%{ transform:translateX(-7px); }
+  40%{ transform:translateX(7px); }
+  60%{ transform:translateX(-5px); }
+  80%{ transform:translateX(5px); }
+}
+
+/* ---------- Display pill ---------- */
+.display{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#fff;
+  border-radius:30px;
+  padding:8px 8px 8px 20px;
+  margin-bottom:6px;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,.08);
+}
+
+#display-text{
+  font-family:'Courier New', monospace;
+  font-weight:bold;
+  font-size:17px;
+  letter-spacing:4px;
+  color:#c2185b;
+  min-height:20px;
+}
+
+.arrow-btn{
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:50%;
+  background:#e0214f;
+  color:#fff;
+  font-size:15px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .15s, background .15s;
+}
+
+.arrow-btn:hover{
+  background:#c2185b;
+  transform:scale(1.08);
+}
+
+.arrow-btn:active{
+  transform:scale(.92);
+}
+
+.hint{
+  min-height:16px;
+  font-size:11px;
+  color:#d32f2f;
+  margin-bottom:10px;
+}
+
+/* ---------- Heart-shaped keypad ---------- */
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px 4px;
+  justify-items:center;
+}
+
+.heart-key{
+  position:relative;
+  width:48px;
+  height:42px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  margin-top:6px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.heart-key:before,
+.heart-key:after{
+  content:"";
+  position:absolute;
+  left:24px;
+  top:0;
+  width:24px;
+  height:38px;
+  background:#e0214f;
+  border-radius:24px 24px 0 0;
+  transform:rotate(-45deg);
+  transform-origin:0 100%;
+  transition:background .15s, transform .15s;
+}
+
+.heart-key:after{
+  left:0;
+  transform:rotate(45deg);
+  transform-origin:100% 100%;
+}
+
+.heart-key span{
+  position:relative;
+  z-index:2;
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  font-family:'Quicksand', sans-serif;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+  height:100%;
+
+  transform:none;
+}
+
+.heart-key:hover:before,
+.heart-key:hover:after{
+  background:#ff4d77;
+}
+
+.heart-key:active:before,
+.heart-key:active:after,
+.heart-key.pressed:before,
+.heart-key.pressed:after{
+  background:#a9123e;
+}
+
+.heart-key:active span,
+.heart-key.pressed span{
+  transform:translateY(4px) scale(.9);
+}
+
+.heart-key.delete:before,
+.heart-key.delete:after{
+  background:#b0405a;
+}
+
+/* zero key centered on its own row */
+.heart-key:nth-child(11){
+  grid-column:2;
+}
+
+/* ---------- Success page ---------- */
+.success-page{
+  width:280px;
+  max-width:100%;
+  padding:40px;
+
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.25);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+
+  border-radius:28px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+
+  animation:popIn .5s cubic-bezier(.17,.67,.35,1.4);
+}
+@keyframes popIn{
+  0%{ transform:scale(.6); opacity:0; }
+  100%{ transform:scale(1); opacity:1; }
+}
+
+.success-emoji{
+  font-size:54px;
+  margin-bottom:10px;
+  display:block;
+  animation:bounce .7s .3s cubic-bezier(.17,.67,.35,1.4) both;
+}
+
+@keyframes bounce{
+  0%{ transform:scale(.5); opacity:0; }
+  100%{ transform:scale(1); opacity:1; }
+}
+
+.hearts-row{
+  font-size:20px;
+  letter-spacing:4px;
+  margin-bottom:6px;
+}
+
+.success-title{
+  font-size:21px;
+  color:#f00808;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.success-msg{
+  font-size:13px;
+  color:#e7d4d4e6;
+  line-height:1.6;
+  margin-bottom:22px;
+}
+
+.gift-btn{
+  display:inline-block;
+  padding:11px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.3px;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff5f9e,#e8195f);
+  box-shadow:0 4px 14px rgba(232,25,95,.35);
+  animation:heartbeat 2.4s ease-in-out infinite;
+  transition:transform .2s ease;
+}
+
+@keyframes heartbeat{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.03); }
+}
+
+.gift-btn:hover{
+  transform:translateY(-2px);
+}
+
+@media (max-width: 768px){
+  html, body{
+    background-attachment: scroll;
+  }
+}

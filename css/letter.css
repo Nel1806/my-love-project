@@ -1,0 +1,320 @@
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  min-height:100vh;
+  overflow:hidden;
+  position:relative;
+  font-family:'Quicksand', sans-serif;
+ background:url("../images/continuebg.png") center/cover;
+
+}
+
+.bg{
+
+position:fixed;
+inset:0;
+
+background:url("../images/mainbg.jpg") center/cover;
+
+animation:bgZoom 20s linear infinite alternate;
+
+filter:
+brightness(.6)
+contrast(1.1)
+saturate(1.2);
+
+z-index:-2;
+
+}
+.overlay{
+
+position:fixed;
+inset:0;
+
+background:
+
+linear-gradient(
+180deg,
+rgba(70,20,40,.35),
+rgba(20,10,20,.75)
+);
+
+backdrop-filter:blur(2px);
+
+z-index:-1;
+
+}
+
+.scene{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px 100px;
+}
+
+.title{
+    font-family:'Great Vibes',cursive;
+    font-size:54px;
+    color:#fff;
+
+    text-shadow:
+        0 3px 10px rgba(0,0,0,.6),
+        0 0 25px hotpink,
+        0 0 45px deeppink;
+
+    animation:glow 2s infinite alternate;
+}
+.subtitle{
+  color:rgba(255,255,255,.85);
+  font-size:12px;
+  letter-spacing:.4px;
+}
+
+/* ---------- Letter card ---------- */
+.letter-paper{
+    position:relative;
+    width:min(700px,95%);
+    max-height:78vh;
+
+    overflow-y:hidden;
+    overflow-x:hidden;
+
+    padding:50px;
+
+    border-radius:28px;
+
+    background:rgba(255,255,255,.12);
+
+    border:1px solid rgba(255,255,255,.35);
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45),
+        0 0 30px rgba(255,180,220,.25);
+
+    scrollbar-width:thin;
+    scrollbar-color:#ff8fc0 transparent;
+
+    isolation:isolate;
+}
+
+.letter-paper::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.35),
+            rgba(255,255,255,.35)
+        ),
+        url("../images/photo1.jpeg") center/cover no-repeat;
+
+    filter: blur(3px) brightness(.65);
+
+    transform:scale(1.08);
+
+    z-index:-1;
+
+    border-radius:28px;
+}
+
+/* Chrome */
+.letter-paper::-webkit-scrollbar{
+    width:10px;
+}
+
+.letter-paper::-webkit-scrollbar-track{
+    background:rgba(255,255,255,.08);
+    border-radius:20px;
+}
+
+.letter-paper::-webkit-scrollbar-thumb{
+    background:linear-gradient(#ff8ab8,#ff4d88);
+    border-radius:20px;
+}
+
+.letter-paper::-webkit-scrollbar-thumb:hover{
+    background:#ff2d75;
+}
+.letter-body{
+  text-align:left;
+  margin-top:20px;
+}
+
+.letter-body p{
+    opacity:0;
+    color:#fff;
+
+    font-size:16px;
+    line-height:2;
+
+    margin-bottom:22px;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.85),
+        0 0 15px rgba(0,0,0,.5);
+}
+
+.signoff{
+  font-family:'Great Vibes', cursive;
+  font-size:22px;
+  color:#fff;
+  margin-top:10px;
+}
+
+/* ---------- Back button ---------- */
+.back-btn{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  width:38px;
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  color:#fff;
+  font-size:18px;
+  text-decoration:none;
+  z-index:5;
+  transition:background .2s ease, transform .2s ease;
+}
+
+.back-btn:hover{
+  background:rgba(255,255,255,.3);
+  transform:translateX(-50%) translateY(-3px);
+}
+
+@keyframes bgZoom{
+
+from{
+
+transform:scale(1);
+
+}
+
+to{
+
+transform:scale(1.12);
+
+}
+
+}
+
+@keyframes openLetter{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translateY(120px)
+scale(.6);
+
+}
+
+60%{
+
+opacity:1;
+
+transform:
+
+translateY(-20px)
+scale(1.03);
+
+}
+
+100%{
+
+opacity:1;
+
+transform:
+
+translateY(0)
+scale(1);
+
+}
+
+}
+
+@keyframes floating{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-8px);
+
+}
+
+}
+.letter-paper{
+
+animation:
+
+openLetter 2s forwards,
+floating 5s ease-in-out infinite;
+
+animation-delay:
+
+0s,
+2s;
+
+}
+
+@keyframes glow{
+
+from{
+
+text-shadow:
+
+0 0 10px pink,
+0 0 20px hotpink;
+
+}
+
+to{
+
+text-shadow:
+
+0 0 20px white,
+0 0 40px deeppink,
+0 0 70px hotpink;
+
+}
+
+}
+
+.cursor{
+
+color:#ff6fa8;
+
+animation:
+
+blink .8s infinite;
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:0;
+
+}
+
+}

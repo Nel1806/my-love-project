@@ -1,0 +1,231 @@
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  min-height:100vh;
+  overflow:hidden;
+  position:relative;
+  font-family:'Quicksand', sans-serif;
+}
+
+/* Background slideshow — each photo slides bottom-to-top, then the next fades in */
+.bg-slideshow{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  z-index:-2;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  filter:saturate(.7) brightness(.8);
+  opacity:0;
+  transform:translateY(100%);
+  animation:slideUp 16s infinite;
+}
+
+/* stagger each slide so only one is visible/moving at a time */
+.slide:nth-child(1){ animation-delay:0s;  }
+.slide:nth-child(2){ animation-delay:4s;  }
+.slide:nth-child(3){ animation-delay:8s;  }
+.slide:nth-child(4){ animation-delay:12s; }
+
+@keyframes slideUp{
+  0%{
+    opacity:0;
+    transform:translateY(100%);
+  }
+  6%{
+    opacity:1;
+    transform:translateY(0%);
+  }
+  25%{
+    opacity:1;
+    transform:translateY(0%);
+  }
+  31%{
+    opacity:0;
+    transform:translateY(-100%);
+  }
+  100%{
+    opacity:0;
+    transform:translateY(-100%);
+  }
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg, rgba(120,40,60,.55), rgba(60,20,35,.65));
+  z-index:-1;
+}
+
+.content{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+}
+
+.title{
+  font-family:'Great Vibes', cursive;
+  font-size:clamp(34px, 7vw, 52px);
+  color:#fff;
+  text-shadow:0 2px 14px rgba(0,0,0,.4);
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:rgba(255,255,255,.85);
+  font-size:13px;
+  letter-spacing:.5px;
+  margin-bottom:30px;
+}
+
+/* ---------- Cat + floating decorations ---------- */
+.cat-wrap{
+  position:relative;
+  width:160px;
+  height:160px;
+  margin-bottom:34px;
+}
+
+.deco{
+  position:absolute;
+  font-size:20px;
+  animation:orbit 3s ease-in-out infinite;
+}
+
+.d1{ top:-6px;  left:-26px; animation-delay:0s; }
+.d2{ top:-14px; right:-22px; animation-delay:.6s; }
+.d3{ bottom:6px; left:-34px; animation-delay:1.2s; }
+.d4{ bottom:-4px; right:-30px; animation-delay:1.8s; }
+
+@keyframes orbit{
+  0%, 100%{ transform:translateY(0) rotate(0deg); }
+  50%{ transform:translateY(-12px) rotate(12deg); }
+}
+
+/* the cat itself bobs gently */
+.cat{
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:120px;
+  height:110px;
+  background:#fff;
+  border-radius:50% 50% 46% 46%;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+  animation:bob 2.4s ease-in-out infinite;
+}
+
+@keyframes bob{
+  0%, 100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+
+.cat-ears{
+  position:absolute;
+  top:-22px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  padding:0 14px;
+}
+
+.cat-ears span{
+  width:34px;
+  height:34px;
+  background:#fff;
+  border-radius:50% 50% 0 50%;
+  transform:rotate(45deg);
+}
+
+.cat-ears span:last-child{
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+}
+
+.cat-face{
+  position:absolute;
+  inset:0;
+}
+
+.cat-cheeks span{
+  position:absolute;
+  top:60px;
+  width:18px;
+  height:11px;
+  background:#ffc3d0;
+  border-radius:50%;
+  opacity:.8;
+}
+.cat-cheeks span:first-child{ left:12px; }
+.cat-cheeks span:last-child{ right:12px; }
+
+.cat-eyes{
+  position:absolute;
+  top:46px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:center;
+  gap:30px;
+}
+
+.cat-eyes span{
+  width:8px;
+  height:10px;
+  background:#3a2a2e;
+  border-radius:50%;
+  animation:blink 4s infinite;
+}
+
+@keyframes blink{
+  0%, 92%, 100%{ transform:scaleY(1); }
+  96%{ transform:scaleY(.1); }
+}
+
+.cat-mouth{
+  position:absolute;
+  top:64px;
+  left:0;
+  right:0;
+  margin:auto;
+  width:14px;
+  height:7px;
+  border-bottom:2px solid #c98a96;
+  border-radius:0 0 14px 14px;
+}
+
+/* ---------- Button ---------- */
+.gift-btn{
+  display:inline-block;
+  padding:11px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:.3px;
+  color:white;
+  text-decoration:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#ff5f9e,#e8195f);
+  box-shadow:0 4px 14px rgba(232,25,95,.35), 0 1px 3px rgba(232,25,95,.25);
+  animation:heartbeat 2.4s ease-in-out infinite;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+@keyframes heartbeat{
+  0%, 100%{ transform:scale(1); }
+  50%{ transform:scale(1.03); }
+}
+
+.gift-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(232,25,95,.45), 0 2px 6px rgba(232,25,95,.3);
+}
