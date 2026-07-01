@@ -12,7 +12,6 @@
 :root {
   /* ---- swap these paths for your own files ---- */
   --bg-image: url('images/continuebg.png');
-  --video-src: url('love.mp4');
   --video-poster: url('images/continuebg.png');
 
   /* palette */
@@ -375,14 +374,15 @@ body {
     <div class="orbit-heart d">&#10084;</div>
 
     <div class="frame-inner">
-      <video
-        id="romanticVideo"
-        style="background-image: var(--video-poster); background-size: cover; background-position: center;"
-        autoplay
-        loop
-        muted
-        playsinline
-        poster="images/bg1.jpeg"
+     <video
+  id="romanticVideo"
+  autoplay
+  loop
+  muted
+  playsinline
+  preload="metadata"
+  
+>
       >
         <source src="love.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -401,7 +401,7 @@ body {
 
 </div>
 
-<a href="javascript:history.back()" class="back-btn" aria-label="Go back">&#8592;</a>
+<a href="continue.html" class="back-btn">←</a>
 
 <script>
   // Generate ambient floating hearts
@@ -456,6 +456,15 @@ body {
     s.style.animationDelay = (Math.random() * 2.4) + 's';
     layer.appendChild(s);
   }
+
+  
+window.addEventListener("pageshow", function () {
+  const video = document.getElementById("romanticVideo");
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+});
 </script>
 
 </body>
