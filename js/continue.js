@@ -29,3 +29,24 @@ function updateCounter(){
 
 updateCounter();
 setInterval(updateCounter, 1000);
+
+
+function goPage(event, element) {
+  event.preventDefault();
+
+  const link = element.getAttribute("href");
+
+  const left = document.querySelector(".flower-curtain.left");
+  const right = document.querySelector(".flower-curtain.right");
+
+  // start closing animation
+  left.classList.add("active");
+  right.classList.add("active");
+
+  // optional: also animate card
+  element.classList.add("closing");
+
+  setTimeout(() => {
+    window.location.href = link;
+  }, 800);
+}

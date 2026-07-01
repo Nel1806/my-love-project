@@ -25,7 +25,7 @@
     const textNode = document.createTextNode("");
     const cursor = document.createElement("span");
     cursor.className = "cursor";
-    cursor.textContent = "❤";
+    cursor.textContent = "🖋";
 
     p.appendChild(textNode);
     p.appendChild(cursor);

@@ -6,10 +6,13 @@
 <title>Happy Anniversary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="css/continue.css">
 </head>
 <body>
 
+  <div class="flower-curtain left"></div>
+  <div class="flower-curtain right"></div>
   <div class="bg"></div>
   <div class="overlay"></div>
 
@@ -22,25 +25,27 @@
     <p class="subtitle">💗 <span id="counter">Loading…</span> 💗</p>
 
     <div class="gifts">
-      <a class="gift-card" href="flowers.html">
-        <span class="icon">💐</span>
-        <p class="label">Picture of Us<br><span>and you</span></p>
-      </a>
+  <a class="gift-card" href="flowers.html" onclick="goPage(event, this)">
+    <span class="icon"><i class="fa-solid fa-video"></i></span>
+    <p class="label">A Video <br><span>of Us</span></p>
+  </a>
 
-      <a class="gift-card" href="letter.html">
-        <span class="icon">💌</span>
-        <p class="label">My love<br><span>letter</span></p>
-      </a>
+  <a class="gift-card" href="letter.html" onclick="goPage(event, this)">
+    <span class="icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+    <p class="label">My love<br><span>letter</span></p>
+  </a>
 
-      <a class="gift-card" href="song.html">
-        <span class="icon">🧸</span>
-        <p class="label">A Song<br><span>for you</span></p>
-      </a>
-    </div>
+ <a class="gift-card" href="song.html" onclick="goPage(event, this)">
+    <span class="icon"><i class="fa-solid fa-music"></i></span>
+    <p class="label">A Song<br><span>for you</span></p>
+  </a>
+</div>
 
     <a href="index.html" class="back-btn" aria-label="Go back">←</a>
   </div>
 
   <script src="js/continue.js"></script>
+
+  
 </body>
 </html>
