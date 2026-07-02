@@ -18,35 +18,58 @@ function updateCounter(){
   const now = new Date();
 
   if(now < ACTIVATION_DATE){
-    // before July 18, 2026: show the fixed total from 2019 up to 2026, frozen
     counterEl.textContent = formatCount(ACTIVATION_DATE - START_DATE);
     return;
   }
 
-  // from July 18, 2026 onward: count live, continuing from 2019
   counterEl.textContent = formatCount(now - START_DATE);
 }
 
-updateCounter();
-setInterval(updateCounter, 1000);
+if (counterEl) {
+  updateCounter();
+  setInterval(updateCounter, 1000);
+}
 
+// ---------- Curtain close → navigate (forward links only) ----------
 
 function goPage(event, element) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const link = element.getAttribute("href");
+  // Back button is explicitly excluded — just navigate, no curtain effect
+  if (element.classList.contains("back-btn")) {
+    window.location.href = element.getAttribute("href");
+    return;
+  }
 
-    const left = document.querySelector(".flower-curtain.left");
-    const right = document.querySelector(".flower-curtain.right");
+  const link = element.getAttribute("href");
+  const left = document.querySelector(".flower-curtain.left");
+  const right = document.querySelector(".flower-curtain.right");
 
-    element.classList.add("closing");
+  element.classList.add("closing");
 
-    // stagger = feels like real stage curtain pull
-    setTimeout(() => left.classList.add("active"), 80);
-    setTimeout(() => right.classList.add("active"), 180);
+  // stagger = feels like a real stage curtain pull
+  setTimeout(() => left.classList.add("active"), 80);
+  setTimeout(() => right.classList.add("active"), 180);
 
-    // wait for animation finish
-    setTimeout(() => {
-        window.location.href = link;
-    }, 1500);
+  // wait for the close animation to finish, then leave the page
+  setTimeout(() => {
+    window.location.href = link;
+  }, 1800);
 }
+
+// ---------- Curtain open (arrival pages only) ----------
+// Any page whose <body> has class="curtain-preclosed" loads with the
+// curtain already shut, waits a beat, then opens to reveal the page.
+// Pages you navigate to via the back button simply don't carry this
+// class, so they load normally with no curtain involved at all.
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.body.classList.contains("curtain-preclosed")) return;
+
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.body.classList.add("curtain-opening");
+      document.body.classList.remove("curtain-preclosed");
+    }, 350); // brief pause so the shut curtain reads before it opens
+  });
+});

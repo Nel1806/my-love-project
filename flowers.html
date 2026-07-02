@@ -15,12 +15,10 @@
   --video-poster: url('images/continuebg.png');
 
   /* palette */
-  --deep-rose: #6e1f3a;
-  --wine: #4a1428;
-  --hot-pink: #ff3d7f;
-  --blush: #ffd9e3;
-  --cream: #fff6f2;
-  --gold: #f0c869;
+   --wine:#f5075f;
+  --deep-rose:#cb0d50;
+  --charcoal-wine:#b00b5e;
+  --gold:#f0c869;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -344,13 +342,123 @@ body {
   transform: translateX(-50%) scale(1.08);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; }
+/* ===================== ARRIVAL CURTAIN ===================== */
+/* This page loads with the curtain shut, then opens to reveal it.
+   Restyled to match this page's rose/wine/gold palette instead of
+   the pink-stripe version used on the gift-picker page. */
+.flower-curtain{
+  position:fixed;
+  top:0;
+  width:50%;
+  height:100vh;
+  z-index:9999;
+  pointer-events:none;
+
+  /* fabric folds — same wine/rose/gold weave used on the
+     destination pages so the curtain reads as one continuous
+     piece of fabric across the close → open transition */
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.06) 0px, transparent 3px) repeat-x,
+    repeating-linear-gradient(
+      90deg,
+      var(--wine) 0px,
+      var(--deep-rose) 16px,
+      var(--charcoal-wine) 32px
+    );
+
+  box-shadow: inset 0 0 140px rgba(0,0,0,0.55);
+
+  /* resting/default state = fully open, with the same slow,
+     smooth easing used for the arrival open on the destination
+     pages — one simple motion, no wave/skew */
+  transform: scaleX(0);
+  transition: transform 1.6s cubic-bezier(.16,.84,.44,1);
+
+  overflow:hidden;
+}
+
+/* LEFT SIDE */
+.flower-curtain.left{
+  left:0;
+  transform-origin:left;
+}
+
+/* RIGHT SIDE */
+.flower-curtain.right{
+  right:0;
+  transform-origin:right;
+}
+
+/* CLOSE — click-triggered. Just transitions to scaleX(1). */
+.flower-curtain.active{
+  transform: scaleX(1);
+}
+
+/* ✨ center glow seam — gold, matching the destination pages */
+.flower-curtain::after{
+  content:"";
+  position:absolute;
+  top:0;
+  width:70px;
+  height:100%;
+  opacity:0.6;
+  background: radial-gradient(circle, rgba(240,200,105,0.25), transparent);
+}
+
+/* seam position */
+.flower-curtain.left::after{ right:0; }
+.flower-curtain.right::after{ left:0; }
+
+/* ✨ light shimmer moving */
+.flower-curtain::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(240,200,105,0.18),
+    transparent
+  );
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { left:-120%; }
+  100% { left:120%; }
+}
+
+/* ==========================================================
+   Arrival state — page loads with the curtain already shut,
+   then opens to reveal the content underneath.
+   ========================================================== */
+
+/* Put class="curtain-preclosed" on <body> for any page that
+   should load "behind closed curtains". No transition here — it
+   snaps to the closed frame instantly on paint, no flash of the
+   open page first. */
+body.curtain-preclosed .flower-curtain{
+  transform: scaleX(1) !important;
+  transition: none !important;
+}
+
+/* continue.js swaps curtain-preclosed → curtain-opening shortly
+   after load. Same simple scaleX transition as the close — one
+   motion, played in the direction each page needs. */
+body.curtain-opening .flower-curtain{
+  transform: scaleX(0) !important;
+  transition: transform 1.6s cubic-bezier(.16,.84,.44,1) !important;
 }
 </style>
 </head>
 
-<body>
+<body class="curtain-preclosed">
+
+<div class="flower-curtain left"></div>
+<div class="flower-curtain right"></div>
 
 <div class="bg"></div>
 <div class="overlay"></div>
@@ -374,15 +482,13 @@ body {
     <div class="orbit-heart d">&#10084;</div>
 
     <div class="frame-inner">
-     <video
-  id="romanticVideo"
-  autoplay
-  loop
-  muted
-  playsinline
-  preload="metadata"
-  
->
+      <video
+        id="romanticVideo"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="metadata"
       >
         <source src="love.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -397,8 +503,6 @@ body {
     </div>
   </div>
 
-  
-
 </div>
 
 <a href="continue.html" class="back-btn">←</a>
@@ -407,7 +511,6 @@ body {
   // Generate ambient floating hearts
   const layer = document.getElementById('heartsLayer');
   const heartCount = 16;
-  const heartChar = '&#10084;';
 
   for (let i = 0; i < heartCount; i++) {
     const h = document.createElement('div');
@@ -457,14 +560,25 @@ body {
     layer.appendChild(s);
   }
 
-  
-window.addEventListener("pageshow", function () {
-  const video = document.getElementById("romanticVideo");
-  if (video) {
-    video.pause();
-    video.currentTime = 0;
-  }
-});
+  window.addEventListener("pageshow", function () {
+    const v = document.getElementById("romanticVideo");
+    if (v) {
+      v.pause();
+      v.currentTime = 0;
+    }
+  });
+
+  // ---------- Curtain open on arrival ----------
+  document.addEventListener("DOMContentLoaded", () => {
+    if (!document.body.classList.contains("curtain-preclosed")) return;
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.body.classList.add("curtain-opening");
+        document.body.classList.remove("curtain-preclosed");
+      }, 350); // brief pause so the shut curtain reads before it opens
+    });
+  });
 </script>
 
 </body>

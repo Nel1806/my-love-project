@@ -64,3 +64,15 @@ async function startWriting() {
 }
 
 startWriting();
+
+// ---------- Curtain open on arrival ----------
+  document.addEventListener("DOMContentLoaded", () => {
+    if (!document.body.classList.contains("curtain-preclosed")) return;
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.body.classList.add("curtain-opening");
+        document.body.classList.remove("curtain-preclosed");
+      }, 350); // brief pause so the shut curtain reads before it opens
+    });
+  });
