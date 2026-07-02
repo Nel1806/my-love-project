@@ -32,21 +32,17 @@ setInterval(updateCounter, 1000);
 
 
 function goPage(event, element) {
-  event.preventDefault();
+    event.preventDefault();
 
-  const link = element.getAttribute("href");
+    const link = element.getAttribute("href");
 
-  const left = document.querySelector(".flower-curtain.left");
-  const right = document.querySelector(".flower-curtain.right");
+    document.querySelector(".flower-curtain.left").classList.add("active");
+    document.querySelector(".flower-curtain.right").classList.add("active");
 
-  // start closing animation
-  left.classList.add("active");
-  right.classList.add("active");
+    element.classList.add("closing");
 
-  // optional: also animate card
-  element.classList.add("closing");
-
-  setTimeout(() => {
-    window.location.href = link;
-  }, 800);
+    // Wait for curtain to completely close
+    setTimeout(() => {
+        window.location.href = link;
+    }, 900); // Match the CSS transition time
 }

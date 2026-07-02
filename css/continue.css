@@ -233,34 +233,67 @@ body{
 }
 
 .flower-curtain{
-  position:fixed;
-  top:0;
-  width:50%;
-  height:100vh;
-  z-index:9999;
-  pointer-events:none;
+    position:fixed;
+    top:0;
+    width:50%;
+    height:100vh;
+    overflow:hidden;
 
-  background: radial-gradient(circle at center,
-    rgba(255,120,170,0.95),
-    rgba(255,30,110,0.98)
-  );
+    background-image:url("../images/curtain.png");
+    background-repeat:no-repeat;
+    background-size:200% 100%;
 
-  transform:translateX(100%);
-  transition:transform 0.7s ease;
+    z-index:9999;
+    pointer-events:none;
+
+    box-shadow:
+        0 0 60px rgba(255,100,170,.35);
+
+    filter:drop-shadow(0 0 30px rgba(255,100,170,.45));
+
+    transition:transform .9s cubic-bezier(.77,0,.18,1);
 }
 
+.flower-curtain::after{
+    content:"";
+    position:absolute;
+    top:0;
+    width:12px;
+    height:100%;
+
+    background:linear-gradient(
+        to right,
+        rgba(255,255,255,.8),
+        transparent
+    );
+
+    opacity:.45;
+}
+
+.flower-curtain.left::after{
+    right:0;
+}
+
+.flower-curtain.right::after{
+    left:0;
+}
 /* left side */
 .flower-curtain.left{
-  left:0;
-  transform:translateX(-100%);
+    left:0;
+
+    background-position:left center;
+
+    transform:translateX(-100%);
 }
 
 /* right side */
 .flower-curtain.right{
-  right:0;
-  transform:translateX(100%);
-}
+    right:0;
 
+    background-position:right center;
+
+    transform:translateX(100%);
+}
 /* ACTIVE STATE (closing effect) */
 .flower-curtain.active.left{
   transform:translateX(0);
