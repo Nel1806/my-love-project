@@ -36,13 +36,17 @@ function goPage(event, element) {
 
     const link = element.getAttribute("href");
 
-    document.querySelector(".flower-curtain.left").classList.add("active");
-    document.querySelector(".flower-curtain.right").classList.add("active");
+    const left = document.querySelector(".flower-curtain.left");
+    const right = document.querySelector(".flower-curtain.right");
 
     element.classList.add("closing");
 
-    // Wait for curtain to completely close
+    // stagger = feels like real stage curtain pull
+    setTimeout(() => left.classList.add("active"), 80);
+    setTimeout(() => right.classList.add("active"), 180);
+
+    // wait for animation finish
     setTimeout(() => {
         window.location.href = link;
-    }, 900); // Match the CSS transition time
+    }, 1500);
 }

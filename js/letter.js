@@ -33,7 +33,7 @@
     for(let i = 0; i < text.length; i++){
       textNode.textContent = text.substring(0, i + 1);
       autoScrollIfNeeded(p);
-      await sleep(45);
+      await sleep(55);
     }
 
     // hide cursor instead of removing it — no layout shift

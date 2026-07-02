@@ -233,72 +233,101 @@ body{
 }
 
 .flower-curtain{
-    position:fixed;
-    top:0;
-    width:50%;
-    height:100vh;
-    overflow:hidden;
+  position:fixed;
+  top:0;
+  width:50%;
+  height:100vh;
+  z-index:9999;
+  pointer-events:none;
 
-    background-image:url("../images/curtain.png");
-    background-repeat:no-repeat;
-    background-size:200% 100%;
+  /* fabric folds */
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 70, 150, 0.95) 0px,
+    rgba(255, 20, 110, 0.95) 18px,
+    rgba(180, 0, 80, 0.95) 36px
+  );
 
-    z-index:9999;
-    pointer-events:none;
+  box-shadow: inset 0 0 120px rgba(0,0,0,0.4);
 
-    box-shadow:
-        0 0 60px rgba(255,100,170,.35);
+  /* important for realism */
+  transform: scaleX(0);
+  transition: transform 1.4s cubic-bezier(0.77, 0, 0.18, 1);
 
-    filter:drop-shadow(0 0 30px rgba(255,100,170,.45));
-
-    transition:transform .9s cubic-bezier(.77,0,.18,1);
+  overflow:hidden;
 }
 
-.flower-curtain::after{
-    content:"";
-    position:absolute;
-    top:0;
-    width:12px;
-    height:100%;
-
-    background:linear-gradient(
-        to right,
-        rgba(255,255,255,.8),
-        transparent
-    );
-
-    opacity:.45;
-}
-
-.flower-curtain.left::after{
-    right:0;
-}
-
-.flower-curtain.right::after{
-    left:0;
-}
-/* left side */
+/* LEFT SIDE */
 .flower-curtain.left{
-    left:0;
-
-    background-position:left center;
-
-    transform:translateX(-100%);
+  left:0;
+  transform-origin:left;
 }
 
-/* right side */
+/* RIGHT SIDE */
 .flower-curtain.right{
-    right:0;
-
-    background-position:right center;
-
-    transform:translateX(100%);
+  right:0;
+  transform-origin:right;
 }
-/* ACTIVE STATE (closing effect) */
+
+/* ACTIVE (closing) */
 .flower-curtain.active.left{
-  transform:translateX(0);
+  transform: scaleX(1);
+  animation: curtainWaveLeft 1.4s ease-in-out;
 }
 
 .flower-curtain.active.right{
-  transform:translateX(0);
+  transform: scaleX(1);
+  animation: curtainWaveRight 1.4s ease-in-out;
+}
+
+/* 🎭 fabric wave motion */
+@keyframes curtainWaveLeft {
+  0%   { transform: scaleX(0.2) skewY(2deg); }
+  40%  { transform: scaleX(0.8) skewY(-1deg); }
+  70%  { transform: scaleX(1.05) skewY(1deg); }
+  100% { transform: scaleX(1) skewY(0deg); }
+}
+
+@keyframes curtainWaveRight {
+  0%   { transform: scaleX(0.2) skewY(-2deg); }
+  40%  { transform: scaleX(0.8) skewY(1deg); }
+  70%  { transform: scaleX(1.05) skewY(-1deg); }
+  100% { transform: scaleX(1) skewY(0deg); }
+}
+
+/* ✨ center glow seam */
+.flower-curtain::after{
+  content:"";
+  position:absolute;
+  top:0;
+  width:80px;
+  height:100%;
+  opacity:0.7;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent);
+}
+
+/* seam position */
+.flower-curtain.left::after{ right:0; }
+.flower-curtain.right::after{ left:0; }
+
+/* ✨ light shimmer moving */
+.flower-curtain::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:60%;
+  height:100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { left:-120%; }
+  100% { left:120%; }
 }
