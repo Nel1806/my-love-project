@@ -1,54 +1,48 @@
-  const paragraphs = document.querySelectorAll(".letter-body p");
-  const letterPaper = document.querySelector(".letter-paper");
+const paragraphs = document.querySelectorAll(".letter-body p");
+const letterScroll = document.querySelector(".letter-scroll");
 
-  function sleep(ms){
-    return new Promise(r => setTimeout(r, ms));
+function sleep(ms){
+  return new Promise(r => setTimeout(r, ms));
+}
+
+// THIS is the part that must exist — without it, text typed past
+// the visible box is invisible until typing ends.
+function autoScrollIfNeeded(p){
+  const boxRect = letterScroll.getBoundingClientRect();
+  const pRect = p.getBoundingClientRect();
+  const overflow = pRect.bottom - boxRect.bottom;
+
+  if(overflow > 0){
+    letterScroll.scrollTop += overflow + 10;
+  }
+}
+
+async function typeEffect(p){
+  const text = p.textContent;
+  p.textContent = "";
+  p.style.opacity = "1";
+
+  const textNode = document.createTextNode("");
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+  cursor.textContent = "🖋";
+
+  p.appendChild(textNode);
+  p.appendChild(cursor);
+
+  for(let i = 0; i < text.length; i++){
+    textNode.textContent = text.substring(0, i + 1);
+    autoScrollIfNeeded(p);   // ← must be called every letter, inside the loop
+    await sleep(55);
   }
 
-  function autoScrollIfNeeded(p){
-    const paperRect = letterPaper.getBoundingClientRect();
-    const pRect = p.getBoundingClientRect();
-    const overflow = pRect.bottom - paperRect.bottom;
+  cursor.style.display = "none";
+}
 
-    if(overflow > 0){
-      letterPaper.scrollTop = letterPaper.scrollTop + overflow + 20;
-    }
-  }
-
-  async function typeEffect(p){
-
-    const text = p.textContent;
-    p.textContent = "";
-    p.style.opacity = "1";
-
-    // create cursor once, reuse it instead of rebuilding innerHTML each time
-    const textNode = document.createTextNode("");
-    const cursor = document.createElement("span");
-    cursor.className = "cursor";
-    cursor.textContent = "🖋";
-
-    p.appendChild(textNode);
-    p.appendChild(cursor);
-
-    for(let i = 0; i < text.length; i++){
-      textNode.textContent = text.substring(0, i + 1);
-      autoScrollIfNeeded(p);
-      await sleep(55);
-    }
-
-    // hide cursor instead of removing it — no layout shift
-    cursor.style.display = "none";
-  }
-
- const audio = document.getElementById("bgMusic");
+const audio = document.getElementById("bgMusic");
 
 async function startWriting() {
-
-  audio.play().catch(() => {
-    console.log("Autoplay blocked");
-  });
-
-  letterPaper.style.overflowY = "hidden";
+  audio.play().catch(() => console.log("Autoplay blocked"));
 
   await sleep(2000);
 
@@ -59,20 +53,18 @@ async function startWriting() {
 
   await sleep(300);
 
-  letterPaper.style.overflowY = "auto";
-  letterPaper.style.scrollBehavior = "smooth";
+  letterScroll.style.overflowY = "auto";
+  letterScroll.style.scrollBehavior = "smooth";
 }
 
 startWriting();
 
-// ---------- Curtain open on arrival ----------
-  document.addEventListener("DOMContentLoaded", () => {
-    if (!document.body.classList.contains("curtain-preclosed")) return;
-
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        document.body.classList.add("curtain-opening");
-        document.body.classList.remove("curtain-preclosed");
-      }, 350); // brief pause so the shut curtain reads before it opens
-    });
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.body.classList.contains("curtain-preclosed")) return;
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.body.classList.add("curtain-opening");
+      document.body.classList.remove("curtain-preclosed");
+    }, 350);
   });
+});

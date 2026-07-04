@@ -302,14 +302,11 @@ body {
 
 /* ===================== BACK BUTTON ===================== */
 .back-btn {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
+  margin-top: 20px;
 
   width: 56px;
   height: 56px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -326,15 +323,15 @@ body {
   border: 2px solid rgba(255,255,255,0.6);
 
   box-shadow:
-    0 0 10px rgba(255, 0, 100, 0.8),
-    0 0 25px rgba(255, 0, 100, 0.6),
-    0 0 45px rgba(255, 0, 100, 0.4);
+    0 0 10px rgba(255,0,100,.8),
+    0 0 25px rgba(255,0,100,.6),
+    0 0 45px rgba(255,0,100,.4);
 
-  transition: 0.25s ease;
+  transition: .25s ease;
 }
 
-.back-btn:hover {
-  transform: translateX(-50%) scale(1.08);
+.back-btn:hover{
+    transform: scale(1.08);
 }
 
 /* ===================== ARRIVAL CURTAIN ===================== */
@@ -498,9 +495,10 @@ body.curtain-opening .flower-curtain{
     </div>
   </div>
 
+  <a href="continue.html" class="back-btn">←</a>
+
 </div>
 
-<a href="continue.html" class="back-btn">←</a>
 
 <script>
   // Generate ambient floating hearts
