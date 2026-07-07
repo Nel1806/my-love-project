@@ -33,7 +33,7 @@ async function typeEffect(p){
   for(let i = 0; i < text.length; i++){
     textNode.textContent = text.substring(0, i + 1);
     autoScrollIfNeeded(p);   // ← must be called every letter, inside the loop
-    await sleep(55);
+    await sleep(65);
   }
 
   cursor.style.display = "none";

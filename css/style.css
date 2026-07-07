@@ -217,89 +217,78 @@ inset 0 1px 0 rgba(255,255,255,.30);
 }
 
 /* ---------- Heart-shaped keypad ---------- */
+/* ---------- Simple Number Keypad ---------- */
+
 .keypad{
   display:grid;
   grid-template-columns:repeat(3, 1fr);
-  gap:8px 4px;
+  gap:10px;
   justify-items:center;
 }
 
 .heart-key{
-  position:relative;
   width:48px;
-  height:42px;
-  background:none;
+  height:48px;
   border:none;
+  border-radius:50%;
   cursor:pointer;
-  margin-top:6px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+  background:linear-gradient(
+    180deg,
+    #ff84b7,
+    #ff4d88
+  );
 
-.heart-key:before,
-.heart-key:after{
-  content:"";
-  position:absolute;
-  left:24px;
-  top:0;
-  width:24px;
-  height:38px;
-  background:#e0214f;
-  border-radius:24px 24px 0 0;
-  transform:rotate(-45deg);
-  transform-origin:0 100%;
-  transition:background .15s, transform .15s;
-}
-
-.heart-key:after{
-  left:0;
-  transform:rotate(45deg);
-  transform-origin:100% 100%;
-}
-
-.heart-key span{
-  position:relative;
-  z-index:2;
-  color:#fff;
+  color:white;
+  font-size:16px;
   font-weight:700;
-  font-size:14px;
   font-family:'Quicksand', sans-serif;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
-  width:100%;
-  height:100%;
+  box-shadow:
+    0 5px 15px rgba(255,0,100,.35);
 
+  transition:.2s;
+}
+
+
+/* remove heart shape */
+.heart-key:before,
+.heart-key:after{
+  display:none;
+}
+
+
+.heart-key:hover{
+  transform:scale(1.1);
+  background:#ff2f7a;
+}
+
+
+.heart-key:active,
+.heart-key.pressed{
+  transform:scale(.9);
+  background:#c2185b;
+}
+
+
+/* number text */
+.heart-key span{
+  color:white;
   transform:none;
 }
 
-.heart-key:hover:before,
-.heart-key:hover:after{
-  background:#ff4d77;
-}
 
-.heart-key:active:before,
-.heart-key:active:after,
-.heart-key.pressed:before,
-.heart-key.pressed:after{
-  background:#a9123e;
-}
-
-.heart-key:active span,
-.heart-key.pressed span{
-  transform:translateY(4px) scale(.9);
-}
-
-.heart-key.delete:before,
-.heart-key.delete:after{
+/* delete button */
+.heart-key.delete{
   background:#b0405a;
 }
 
-/* zero key centered on its own row */
+
+/* zero button centered */
 .heart-key:nth-child(11){
   grid-column:2;
 }
