@@ -19,21 +19,22 @@ body{
 }
 
 .bg{
+    position:fixed;
+    inset:0;
 
-position:fixed;
-inset:0;
+    background:url("../images/mainbg.jpg") center/cover;
 
-background:url("../images/mainbg.jpg") center/cover;
+    animation:bgZoom 30s ease-in-out infinite alternate;
 
-animation:bgZoom 20s linear infinite alternate;
+    filter:
+    brightness(.65)
+    contrast(1.05)
+    saturate(1.1);
 
-filter:
-brightness(.6)
-contrast(1.1)
-saturate(1.2);
+    transform:translateZ(0);
+    will-change:transform;
 
-z-index:-2;
-
+    z-index:-2;
 }
 .overlay{
 
@@ -41,33 +42,56 @@ position:fixed;
 inset:0;
 
 background:
-
 linear-gradient(
 180deg,
 rgba(70,20,40,.35),
 rgba(20,10,20,.75)
 );
 
-backdrop-filter:blur(2px);
+/* remove this */
+ /* backdrop-filter:blur(2px); */
 
 z-index:-1;
 
 }
 
 .scene{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:40px 20px 100px;
+
+min-height:100vh;
+
+display:flex;
+flex-direction:column;
+
+align-items:center;
+justify-content:center;
+
+padding:
+30px 20px;
+
 }
+
+
+@keyframes sceneFade{
+
+from{
+opacity:0;
+transform:translateY(30px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
 
 .title{
     font-family:'Great Vibes',cursive;
     font-size:54px;
     color:#fff;
+     text-align:center;
+
 
     text-shadow:
         0 3px 10px rgba(0,0,0,.6),
@@ -77,12 +101,11 @@ z-index:-1;
     animation:glow 2s infinite alternate;
 }
 .subtitle{
+    text-align:center;
   color:rgba(255,255,255,.85);
   font-size:12px;
   letter-spacing:.4px;
 }
-
-/* ---------- Letter card ---------- */
 .letter-paper{
     position:relative;
     width:min(700px,95%);
@@ -231,52 +254,41 @@ transform:scale(1.12);
 @keyframes openLetter{
 
 0%{
-
 opacity:0;
-
 transform:
-
-translateY(120px)
-scale(.6);
-
+translateY(100px)
+scale(.85);
+filter:blur(10px);
 }
 
 60%{
-
 opacity:1;
-
 transform:
-
-translateY(-20px)
-scale(1.03);
-
+translateY(-10px)
+scale(1.02);
+filter:blur(0);
 }
 
 100%{
-
 opacity:1;
-
 transform:
-
 translateY(0)
 scale(1);
-
+filter:blur(0);
 }
 
 }
+
+
 
 @keyframes floating{
 
 0%,100%{
-
-transform:translateY(0);
-
+transform:translate3d(0,0,0);
 }
 
 50%{
-
-transform:translateY(-8px);
-
+transform:translate3d(0,-6px,0);
 }
 
 }
@@ -344,6 +356,8 @@ opacity:0;
   height:100vh;
   z-index:9999;
   pointer-events:none;
+  will-change:transform;
+transform:scaleX(0) translateZ(0);
 
   /* fabric folds — same wine/rose/gold weave used on the
      destination pages so the curtain reads as one continuous
@@ -363,7 +377,8 @@ opacity:0;
      smooth easing used for the arrival open on the destination
      pages — one simple motion, no wave/skew */
   transform: scaleX(0);
-  transition: transform 1.6s cubic-bezier(.16,.84,.44,1);
+  transition:
+transform 1.8s cubic-bezier(.77,0,.18,1);
 
   overflow:hidden;
 }

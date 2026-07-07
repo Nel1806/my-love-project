@@ -263,46 +263,18 @@ body {
     bottom:-50px;
 
     color:#ff003c;
-    opacity:0.95;
+    opacity:0.9;
 
     text-shadow:
-        0 0 6px #ff003c,
-        0 0 12px #ff003c,
-        0 0 20px #ff2d55,
-        0 0 35px #ff0048,
-        0 0 55px rgba(255,0,60,.8);
+        0 0 8px #ff003c,
+        0 0 20px #ff3366;
 
-    filter:
-        drop-shadow(0 0 10px #ff003c)
-        drop-shadow(0 0 25px rgba(255,0,80,.8));
-
-    animation:
-        riseFade linear infinite,
-        heartGlow 2s ease-in-out infinite alternate;
-
-        
+    animation: riseFade linear infinite;
 }
 
-@keyframes heartGlow{
 
-0%{
 
-filter:
-drop-shadow(0 0 6px #ff003c)
-drop-shadow(0 0 15px #ff003c);
 
-}
-
-100%{
-
-filter:
-drop-shadow(0 0 15px #ff003c)
-drop-shadow(0 0 35px #ff0048)
-drop-shadow(0 0 60px #ff3366);
-
-}
-
-}
 
 @keyframes riseFade {
   0% {
@@ -516,7 +488,7 @@ body.curtain-opening .flower-curtain{
         loop
         muted
         playsinline
-        preload="metadata"
+        preload="none"
       >
         <source src="video.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -539,7 +511,7 @@ body.curtain-opening .flower-curtain{
 <script>
   // Generate ambient floating hearts
   const layer = document.getElementById('heartsLayer');
-  const heartCount = 16;
+  const heartCount = 8;
 
   for (let i = 0; i < heartCount; i++) {
     const h = document.createElement('div');
