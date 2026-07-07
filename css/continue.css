@@ -347,3 +347,9 @@ body.curtain-opening .flower-curtain{
   transform: scaleX(0) !important;
   transition: transform 1.6s cubic-bezier(.16,.84,.44,1) !important;
 }
+
+.icon img{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+}

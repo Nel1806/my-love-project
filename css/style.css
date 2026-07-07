@@ -42,10 +42,22 @@ body::before{
   position:fixed;
   inset:0;
 
-  /* cinematic color grading */
   background:
-    radial-gradient(circle at center, rgba(0,0,0,0.2), rgba(0,0,0,0.75)),
-    linear-gradient(180deg, rgba(255,0,80,0.15), rgba(0,0,0,0.85));
+    radial-gradient(circle at top,
+      rgba(255,180,220,.28),
+      transparent 45%
+    ),
+
+    radial-gradient(circle at bottom right,
+      rgba(255,80,140,.20),
+      transparent 40%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(120,0,50,.20),
+      rgba(20,0,10,.70)
+    );
 
   z-index:0;
 }
@@ -69,11 +81,40 @@ body::before{
 .hidden{ display:none !important; }
 
 .title{
-  font-family:'Great Vibes', cursive;
-  font-size:clamp(30px, 6vw, 44px);
-  color:#fff;
-  text-shadow:0 2px 14px rgba(0,0,0,.4);
-  margin-bottom:4px;
+    font-family:'Great Vibes',cursive;
+    font-size:clamp(34px,6vw,52px);
+
+    color:#fff;
+
+    text-shadow:
+      0 0 8px #ffb3d2,
+      0 0 20px #ff5f9e,
+      0 0 35px #ff2f7a;
+
+    animation:titleGlow 3s infinite alternate;
+
+    margin-bottom:10px;
+}
+
+@keyframes titleGlow{
+
+from{
+
+text-shadow:
+0 0 10px #ff9ec5,
+0 0 20px #ff5f9e;
+
+}
+
+to{
+
+text-shadow:
+0 0 15px #ffd1e5,
+0 0 35px #ff2f7a,
+0 0 60px #ff0055;
+
+}
+
 }
 
 .subtitle{
@@ -96,8 +137,9 @@ body::before{
 
   border-radius:22px;
   box-shadow:
-    0 20px 50px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,0.2);
+0 0 40px rgba(255,60,120,.30),
+0 25px 70px rgba(0,0,0,.35),
+inset 0 1px 0 rgba(255,255,255,.30);
 
   animation:pop .5s ease;
 }
@@ -143,7 +185,12 @@ body::before{
   height:34px;
   border:none;
   border-radius:50%;
-  background:#e0214f;
+  background:linear-gradient(
+180deg,
+#ff84b7,
+#ff4d88,
+#d4004d
+);
   color:#fff;
   font-size:15px;
   cursor:pointer;
@@ -313,18 +360,47 @@ body::before{
 }
 
 .gift-btn{
-  display:inline-block;
-  padding:11px 28px;
-  font-size:14px;
-  font-weight:600;
-  letter-spacing:.3px;
-  color:white;
-  text-decoration:none;
-  border-radius:30px;
-  background:linear-gradient(135deg,#ff5f9e,#e8195f);
-  box-shadow:0 4px 14px rgba(232,25,95,.35);
-  animation:heartbeat 2.4s ease-in-out infinite;
-  transition:transform .2s ease;
+
+display:inline-block;
+
+padding:15px 40px;
+
+border-radius:40px;
+
+color:white;
+
+font-weight:bold;
+
+text-decoration:none;
+
+background:rgba(233, 47, 112, 0.15);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.35);
+
+box-shadow:
+0 10px 30px rgba(0,0,0,.25);
+
+transition:.4s;
+
+}
+
+.gift-btn:hover{
+
+background:rgba(213, 20, 72, 0.25);
+
+transform:translateY(-4px);
+
+}
+
+.gift-btn:hover{
+
+transform:translateY(-4px) scale(1.05);
+
+box-shadow:
+0 0 40px rgba(255,0,80,.8);
+
 }
 
 @keyframes heartbeat{
@@ -340,4 +416,45 @@ body::before{
   html, body{
     background-attachment: scroll;
   }
+}
+
+.floating-hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+}
+
+.floating-hearts span{
+    position:absolute;
+    bottom:-60px;
+    font-size:24px;
+    animation:floatHeart 12s linear infinite;
+}
+
+.floating-hearts span:nth-child(1){left:8%; animation-delay:0s;}
+.floating-hearts span:nth-child(2){left:22%; animation-delay:2s;}
+.floating-hearts span:nth-child(3){left:38%; animation-delay:5s;}
+.floating-hearts span:nth-child(4){left:55%; animation-delay:1s;}
+.floating-hearts span:nth-child(5){left:70%; animation-delay:4s;}
+.floating-hearts span:nth-child(6){left:85%; animation-delay:6s;}
+.floating-hearts span:nth-child(7){left:95%; animation-delay:3s;}
+
+@keyframes floatHeart{
+
+0%{
+transform:translateY(0) scale(.5) rotate(0deg);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh) scale(1.4) rotate(360deg);
+opacity:0;
+}
+
 }

@@ -157,7 +157,7 @@ body {
   position: absolute;
   font-size: 20px;
   color: var(--gold);
-  text-shadow: 0 0 10px rgba(240,200,105,0.8);
+  text-shadow: 0 0 10px rgba(240, 5, 5, 0.8);
   animation: orbitPulse 2.6s ease-in-out infinite;
 }
 .orbit-heart.a { top: -18px; left: 50%; transform: translateX(-50%); animation-delay: 0s; }
@@ -258,14 +258,50 @@ body {
   z-index: 1;
 }
 
-.heart {
-  position: absolute;
-  bottom: -40px;
-  color: var(--hot-pink);
-  opacity: 0.75;
-  animation-name: riseFade;
-  animation-timing-function: ease-in;
-  animation-iteration-count: infinite;
+.heart{
+    position:absolute;
+    bottom:-50px;
+
+    color:#ff003c;
+    opacity:0.95;
+
+    text-shadow:
+        0 0 6px #ff003c,
+        0 0 12px #ff003c,
+        0 0 20px #ff2d55,
+        0 0 35px #ff0048,
+        0 0 55px rgba(255,0,60,.8);
+
+    filter:
+        drop-shadow(0 0 10px #ff003c)
+        drop-shadow(0 0 25px rgba(255,0,80,.8));
+
+    animation:
+        riseFade linear infinite,
+        heartGlow 2s ease-in-out infinite alternate;
+
+        
+}
+
+@keyframes heartGlow{
+
+0%{
+
+filter:
+drop-shadow(0 0 6px #ff003c)
+drop-shadow(0 0 15px #ff003c);
+
+}
+
+100%{
+
+filter:
+drop-shadow(0 0 15px #ff003c)
+drop-shadow(0 0 35px #ff0048)
+drop-shadow(0 0 60px #ff3366);
+
+}
+
 }
 
 @keyframes riseFade {
@@ -508,7 +544,7 @@ body.curtain-opening .flower-curtain{
   for (let i = 0; i < heartCount; i++) {
     const h = document.createElement('div');
     h.className = 'heart';
-    h.innerHTML = '&#10084;';
+   h.innerHTML = '❤️';
     const size = 12 + Math.random() * 22;
     const left = Math.random() * 100;
     const duration = 6 + Math.random() * 7;
