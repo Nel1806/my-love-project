@@ -249,6 +249,42 @@ body {
   display: flex;
 }
 
+.fullscreen-toggle{
+    position:absolute;
+    bottom:10px;
+    left:10px;
+
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+
+    background:rgba(20,4,10,.55);
+    border:1px solid rgba(255,255,255,.5);
+
+    color:white;
+    font-size:16px;
+
+    transition:.25s;
+}
+
+.fullscreen-toggle:hover{
+    transform:scale(1.08);
+    background:rgba(255,61,127,.8);
+
+    
+}
+
+.fullscreen-toggle{
+    display:none;
+}
+
 /* ===================== FLOATING HEARTS (ambient) ===================== */
 .hearts-layer {
   position: absolute;
@@ -309,37 +345,38 @@ body {
 }
 
 /* ===================== BACK BUTTON ===================== */
-.back-btn {
-  margin-top: 20px;
+.back-btn{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  width:46px;
+  height:46px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
 
-  width: 56px;
-  height: 56px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-  text-decoration: none;
-
-  background: linear-gradient(135deg, #ff2e7a, #ff7fb3, #ff1f6d);
-
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-
-  border: 2px solid rgba(255,255,255,0.6);
+ background:radial-gradient(circle at 35% 30%, #ff7fb3, #ff1f6d 70%);
+  color:#fff;
+  font-size:18px;
+  text-decoration:none;
+  z-index:5;
 
   box-shadow:
-    0 0 10px rgba(255,0,100,.8),
-    0 0 25px rgba(255,0,100,.6),
-    0 0 45px rgba(255,0,100,.4);
+    0 0 14px rgba(255,30,110,.8),
+    0 0 34px rgba(255,30,110,.5),
+    inset 0 1px 2px rgba(255,255,255,.4);
 
-  transition: .25s ease;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .back-btn:hover{
-    transform: scale(1.08);
+  transform:translateX(-50%) translateY(-3px) scale(1.08);
+  box-shadow:
+    0 0 20px rgba(255,30,110,1),
+    0 0 48px rgba(255,30,110,.7),
+    inset 0 1px 2px rgba(255,255,255,.5);
 }
 
 /* ===================== ARRIVAL CURTAIN ===================== */
@@ -500,6 +537,10 @@ body.curtain-opening .flower-curtain{
       </div>
 
       <button class="mute-toggle" id="muteToggle" aria-label="Toggle sound">&#128266;</button>
+
+      <button class="fullscreen-toggle" id="fullscreenToggle" aria-label="Fullscreen">
+    ⛶
+</button>
     </div>
   </div>
 
@@ -543,6 +584,8 @@ body.curtain-opening .flower-curtain{
     soundPrompt.classList.add('hidden');
     muteToggle.classList.add('visible');
     muteToggle.innerHTML = '&#128266;';
+
+    fullscreenToggle.style.display = "flex";
   });
 
   muteToggle.addEventListener('click', () => {
@@ -580,6 +623,38 @@ body.curtain-opening .flower-curtain{
       }, 350); // brief pause so the shut curtain reads before it opens
     });
   });
+
+  const fullscreenToggle = document.getElementById("fullscreenToggle");
+
+fullscreenToggle.addEventListener("click", () => {
+
+    if (!document.fullscreenElement) {
+
+        video.requestFullscreen();
+
+        fullscreenToggle.innerHTML = "⤢";
+
+    } else {
+
+        document.exitFullscreen();
+
+    }
+
+});
+
+document.addEventListener("fullscreenchange", () => {
+
+    if(document.fullscreenElement){
+
+        fullscreenToggle.innerHTML = "⤢";
+
+    }else{
+
+        fullscreenToggle.innerHTML = "⛶";
+
+    }
+
+});
 </script>
 
 </body>
