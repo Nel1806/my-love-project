@@ -127,15 +127,26 @@ body {
   }
 }
 
-.frame-inner {
+.frame-inner{
+    position: relative;
     width: min(90vw, 900px);
     aspect-ratio: 16 / 9;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
 }
 
-.frame-inner video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.frame-inner video{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
 }
 
 /* corner flourishes */
