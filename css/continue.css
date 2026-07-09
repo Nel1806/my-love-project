@@ -104,6 +104,11 @@ body{
 }
 
 .gift-card{
+  
+    opacity:0;
+    transform:translateY(60px) scale(.8);
+    filter:none; /* remove blur */
+    overflow: hidden;   /* <-- Add this */
   width:140px;
   padding:26px 14px 20px;
   text-decoration:none;
@@ -122,18 +127,21 @@ body{
   transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
 }
 
+.gift-card:not(.show){
+    opacity:0;
+}
+
 .gift-card:hover .icon i{
   animation-play-state:paused;
   transform:translateY(-8px) scale(1.15) rotate(-5deg);
   color:#e92a70;
 }
 
-.gift-card .icon{
-  font-size:40px;
-  display:block;
-  margin-bottom:14px;
-  filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));
-  animation:float 3.2s ease-in-out infinite;
+.gift-card .icon img{
+    width:40px;
+    height:40px;
+    object-fit:contain;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));
 }
 
 .gift-card .icon i{
@@ -181,6 +189,30 @@ body{
   transform:translateX(-50%);
   font-size:9px;
   color:rgba(255,255,255,.6);
+}
+
+.gift-card.show{
+    animation:giftReveal .9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+
+@keyframes giftReveal{
+
+    0%{
+        opacity:0;
+        transform:translateY(60px) scale(.8);
+    }
+
+    60%{
+        opacity:1;
+        transform:translateY(-10px) scale(1.05);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
 }
 
 /* ---------- Neon back button ---------- */
@@ -352,4 +384,62 @@ body.curtain-opening .flower-curtain{
     width:40px;
     height:40px;
     object-fit:contain;
+}
+/* ===============================
+   Gift Card Entrance Animation
+================================= */
+
+.gift-card{
+    opacity:0;
+    transform:translateY(60px) scale(.8);
+    filter:blur(8px);
+}
+
+/* Play animation */
+.gift-card.show{
+    animation:giftReveal .9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes giftReveal{
+    0%{
+        opacity:0;
+        transform:translateY(60px) scale(.8) rotate(-6deg);
+        filter:blur(8px);
+    }
+
+    60%{
+        opacity:1;
+        transform:translateY(-10px) scale(1.05);
+        filter:blur(0);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1) rotate(0deg);
+        filter:blur(0);
+    }
+}
+
+.gift-card::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    border-radius:22px;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.7),
+        transparent
+    );
+    transform:translateX(-180%);
+}
+
+.gift-card.show::before{
+    animation:shineCard .9s ease;
+}
+
+@keyframes shineCard{
+    to{
+        transform:translateX(180%);
+    }
 }

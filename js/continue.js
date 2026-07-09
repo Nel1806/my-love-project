@@ -64,12 +64,35 @@ function goPage(event, element) {
 // class, so they load normally with no curtain involved at all.
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (!document.body.classList.contains("curtain-preclosed")) return;
 
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      document.body.classList.add("curtain-opening");
-      document.body.classList.remove("curtain-preclosed");
-    }, 350); // brief pause so the shut curtain reads before it opens
-  });
+  const cards = document.querySelectorAll(".gift-card");
+
+  if (document.body.classList.contains("curtain-preclosed")) {
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.body.classList.add("curtain-opening");
+        document.body.classList.remove("curtain-preclosed");
+
+        // Show cards after curtain finishes opening
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add("show");
+          }, 1700 + index * 450);
+        });
+
+      }, 350);
+    });
+
+  } else {
+
+    // No curtain, show cards normally
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.add("show");
+      }, 300 + index * 450);
+    });
+
+  }
+
 });
