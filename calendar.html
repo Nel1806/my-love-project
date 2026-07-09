@@ -13,11 +13,12 @@
 }
 
 body{
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow:hidden;
+    overflow-x:hidden;
+    overflow-y:auto;
 
     background:
     radial-gradient(circle at 20% 20%, rgba(255,255,255,.45), transparent 25%),
@@ -33,6 +34,8 @@ body{
     font-family:'Segoe UI',sans-serif;
 
     position:relative;
+
+    padding:20px 0;
 }
 
 /* floating hearts */
@@ -94,6 +97,16 @@ body{
 }
 
 
+.page{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:22px;
+
+    position:relative;
+    z-index:10;   /* Stays above hearts */
+}
+
 .calendar{
     width:330px;
     background:white;
@@ -104,7 +117,6 @@ body{
     animation:open 1.5s ease;
 
     position:relative;
-    z-index:10;   /* Calendar stays above hearts */
 }
 
 
@@ -195,30 +207,43 @@ body{
 
 .message{
     text-align:center;
-    padding:20px;
-    font-size:20px;
+    padding:12px;
+    font-size:18px;
     color:#ff4f91;
     font-family:cursive;
 }
 
 /* ===========================
    Continue Container
+   Now sits in normal document flow, inside the card,
+   so it can never be clipped or overlap on small screens.
 =========================== */
 
 .continue-container{
-    position:fixed;
-    left:50%;
-    bottom:45px;
-    transform:translateX(-50%) scale(.5);
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+
+    padding:0 15px;
+
     opacity:0;
-    transition:1s ease;
+    transform:translateY(15px) scale(.9);
+
+    transition:.8s ease;
+
     pointer-events:none;
 }
 
+
 .continue-container.show{
+
     opacity:1;
-    transform:translateX(-50%) scale(1);
+
+    transform:translateY(0) scale(1);
+
     pointer-events:auto;
+
 }
 
 /* ===========================
@@ -233,14 +258,14 @@ body{
     align-items:center;
     justify-content:center;
 
-    padding:18px 45px;
+    padding:16px 40px;
 
     border-radius:60px;
 
     text-decoration:none;
 
     color:white;
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
 
     background:linear-gradient(135deg,#ff7eb3,#ff4f91);
@@ -254,6 +279,8 @@ body{
     animation:
     floating 3s ease-in-out infinite,
     glow 2s infinite;
+
+    white-space:nowrap;
 }
 
 /* glossy shine */
@@ -300,22 +327,24 @@ body{
     position:absolute;
 
     color:white;
-    font-size:25px;
+    font-size:22px;
 
     animation:sparkle 2s infinite;
+
+    top:50%;
+
+    margin-top:-11px;
 }
 
 .sparkles::before{
 
-    left:-35px;
-    top:-10px;
+    left:8px;
 
 }
 
 .sparkles::after{
 
-    right:-35px;
-    bottom:-10px;
+    right:8px;
 
     animation-delay:1s;
 }
@@ -333,22 +362,22 @@ body{
 
     color:#ff5d9f;
 
-    font-size:18px;
+    font-size:16px;
 
     animation:heartFloat 2.5s infinite ease-in-out;
+
+    bottom:15px;
 }
 
 .continue-container::before{
 
-    left:-18px;
-    bottom:15px;
+    left:15px;
 
 }
 
 .continue-container::after{
 
-    right:-18px;
-    bottom:15px;
+    right:15px;
 
     animation-delay:1.2s;
 }
@@ -380,7 +409,7 @@ body{
 
     50%{
 
-        transform:translateY(-8px);
+        transform:translateY(-6px);
 
     }
 
@@ -451,6 +480,41 @@ body{
 
 }
 
+@media(max-width:500px){
+
+    .page{
+
+        gap:18px;
+        width:100%;
+        padding:0 10px;
+
+    }
+
+    .calendar{
+
+        width:100%;
+        max-width:320px;
+
+    }
+
+
+    .continue-btn{
+
+        padding:14px 32px;
+
+        font-size:16px;
+
+    }
+
+
+    .continue-container{
+
+        width:100%;
+
+    }
+
+}
+
 .year-box{
     width:120px;
     height:40px;
@@ -480,6 +544,8 @@ body{
 
 <body>
 
+
+<div class="page">
 
 <div class="calendar">
 
@@ -562,7 +628,10 @@ body{
 ❤️ Our Special Day ❤️
 </div>
 
-<!-- Continue Button -->
+</div>
+<!-- calendar ends here -->
+
+<!-- Continue Button — lives outside the calendar card -->
 <div class="continue-container" id="continueContainer">
     <div class="sparkles"></div>
 
@@ -572,6 +641,7 @@ body{
 </div>
 
 </div>
+<!-- page wrapper ends here -->
 
 
 <script>
