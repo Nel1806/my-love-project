@@ -6,29 +6,336 @@
 <title>Happy Monthsary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<style>
+  :root{
+  --plaid-dark:   #4a1028;
+  --plaid-mid:    #d94f83;
+  --plaid-line:   #ff9fc5;
+  --plaid-line2:  #7a2345;
+
+  --cream:        #fff5fa;
+  --cream-dim:    #ffd6e7;
+  --gold:         #ffd166;
+  --heart-red:    #ff4d88;
+
+  --pink-glow:    #ff8fc7;
+}
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  body{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Quicksand', sans-serif;
+  color:var(--cream);
+  overflow:hidden;
+  position:relative;
+
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(255,192,203,0.45), transparent 40%),
+    linear-gradient(135deg,#ff9fc5,#d94f83,#8e3150);
+}
+
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle,
+    rgba(255,255,255,0.18) 1px,
+    transparent 1px);
+
+  background-size:35px 35px;
+  opacity:.5;
+  pointer-events:none;
+}
+
+  .floating-hearts{
+    position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;
+  }
+  .floating-hearts span{
+    position:absolute;
+    bottom:-10%;
+    font-size:1.4rem;
+    color:rgba(243,230,216,0.35);
+    animation:float 9s linear infinite;
+  }
+  .floating-hearts span:nth-child(1){ left:6%;  animation-delay:0s;  font-size:1.1rem;}
+  .floating-hearts span:nth-child(2){ left:18%; animation-delay:1.5s; font-size:1.6rem;}
+  .floating-hearts span:nth-child(3){ left:32%; animation-delay:3s;  font-size:1rem;}
+  .floating-hearts span:nth-child(4){ left:52%; animation-delay:0.7s; font-size:1.3rem;}
+  .floating-hearts span:nth-child(5){ left:68%; animation-delay:2.2s; font-size:1.5rem;}
+  .floating-hearts span:nth-child(6){ left:80%; animation-delay:4s;  font-size:1.1rem;}
+  .floating-hearts span:nth-child(7){ left:90%; animation-delay:1s;  font-size:1.2rem;}
+
+  @keyframes float{
+    to{ transform:translateY(-120vh) rotate(20deg); opacity:0; }
+  }
+
+  .scene{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:24px;
+    width:100%;
+  }
+  .hidden{ display:none !important; }
+
+  .title{
+    font-family:'Great Vibes', cursive;
+    font-size:2.4rem;
+    color:var(--cream);
+    text-shadow:0 2px 6px rgba(0,0,0,0.4);
+    text-align:center;
+  }
+  .subtitle{
+    margin-top:4px;
+    margin-bottom:22px;
+    font-size:0.85rem;
+    letter-spacing:0.06em;
+    color:var(--cream-dim);
+    text-align:center;
+  }
+
+  .card{
+  background:linear-gradient(
+    145deg,
+    rgba(255,255,255,0.25),
+    rgba(255,105,160,0.35)
+  );
+
+  backdrop-filter:blur(15px);
+
+  border:1px solid rgba(255,255,255,0.4);
+
+  border-radius:25px;
+
+  padding:26px 24px 22px;
+  width:290px;
+
+  box-shadow:
+    0 20px 50px rgba(120,0,60,0.35),
+    inset 0 1px 20px rgba(255,255,255,0.3);
+}
+
+  .card.shake{ animation:shake 0.4s; }
+  @keyframes shake{
+    0%,100%{ transform:translateX(0); }
+    20%{ transform:translateX(-8px); }
+    40%{ transform:translateX(8px); }
+    60%{ transform:translateX(-6px); }
+    80%{ transform:translateX(6px); }
+  }
+
+  .heart-display{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .heart-box{
+  width:46px;
+  height:52px;
+  border-radius:15px;
+
+  background:#fff0f6;
+  color:#c2185b;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:1.3rem;
+
+  box-shadow:
+    0 5px 15px rgba(255,105,150,.35),
+    inset 0 -3px 0 rgba(255,255,255,.5);
+
+  transition:.2s;
+}
+  .heart-box.filled{
+  background:#ff7eb3;
+  color:white;
+
+  transform:scale(1.08);
+
+  box-shadow:
+    0 0 10px #ffb6d9,
+    0 0 25px #ff69b4;
+}
+
+  .display{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    min-height:20px;
+    margin-bottom:6px;
+  }
+  #display-text{
+    font-size:0.8rem;
+    letter-spacing:0.3em;
+    color:var(--cream-dim);
+  }
+  .arrow-btn{
+    background:var(--gold);
+    color:var(--plaid-dark);
+    border:none;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    font-size:0.95rem;
+    cursor:pointer;
+    box-shadow:0 3px 8px rgba(0,0,0,0.35);
+    transition:transform 0.15s ease;
+  }
+  .arrow-btn:hover{ transform:scale(1.08); }
+  .arrow-btn:active{ transform:scale(0.94); }
+
+  .hint{
+    text-align:center;
+    font-size:0.75rem;
+    min-height:16px;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+
+  .keypad{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+  }
+  .heart-key{
+    background:var(--cream);
+    color:var(--plaid-dark);
+    border:none;
+    border-radius:12px;
+    height:52px;
+    font-family:'Quicksand', sans-serif;
+    font-size:1.05rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:inset 0 -3px 0 rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.3);
+    transition:transform 0.1s ease, background 0.15s ease;
+  }
+  .heart-key:hover{ background:var(--cream-dim); }
+  .heart-key:active{ transform:scale(0.94); }
+  .heart-key.delete{
+    background:transparent;
+    color:var(--cream);
+    box-shadow:none;
+    font-size:1.1rem;
+  }
+  .heart-key.delete:hover{ color:var(--gold); }
+  .heart-key:nth-last-child(1){
+    grid-column:2;
+  }
+
+  /* success page */
+  .success-page{
+    text-align:center;
+    max-width:320px;
+  }
+  .success-emoji{ font-size:3rem; display:block; margin-bottom:8px; }
+  .hearts-row{ font-size:1.4rem; margin-bottom:10px; }
+  .success-title{
+    font-family:'Great Vibes', cursive;
+    font-size:2.2rem;
+    color:var(--gold);
+    margin-bottom:10px;
+  }
+  .success-msg{
+    font-size:0.95rem;
+    line-height:1.6;
+    color:var(--cream-dim);
+  }
+
+  /* popup */
+  .popup{
+  position:fixed;
+  inset:0;
+
+  background:
+    radial-gradient(circle at top,
+    rgba(255,192,203,0.35),
+    rgba(90,10,45,0.75));
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:10;
+
+  backdrop-filter:blur(8px);
+}
+  .popup-box{
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.35),
+      rgba(255,105,160,0.45)
+    );
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,0.5);
+
+  border-radius:28px;
+
+  padding:30px 28px;
+
+  text-align:center;
+
+  width:270px;
+
+  box-shadow:
+    0 20px 60px rgba(150,0,80,0.45),
+    inset 0 0 25px rgba(255,255,255,0.3);
+
+  animation:popupShow .35s ease;
+}
+  .popup-box h2{
+    font-family:'Great Vibes', cursive;
+    font-size:1.8rem;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  .popup-box p{
+    font-size:0.9rem;
+    color:var(--cream-dim);
+    margin-bottom:6px;
+  }
+
+  .popup-image{
+  width:70px;
+  height:70px;
+  object-fit:contain;
+  margin-bottom:10px;
+}
+</style>
 </head>
 <body>
 
   <div class="floating-hearts">
-    <span>❤</span>
-    <span>💕</span>
-    <span>💖</span>
-    <span>💗</span>
-    <span>❤</span>
-    <span>💝</span>
-    <span>💕</span>
-</div>
-
+    <span>❤</span><span>💕</span><span>💖</span><span>💗</span>
+    <span>❤</span><span>💝</span><span>💕</span>
+  </div>
 
   <div class="scene" id="lockScene">
     <h1 class="title">Happy Anniversary, Lablab!</h1>
     <p class="subtitle">Enter our monthsary date</p>
 
     <div class="card">
-      <div class="display">
-        <span id="display-text">&nbsp;</span>
-        <button class="arrow-btn" id="enterBtn" onclick="submitCode()">➜</button>
+      <div class="heart-display">
+        <div class="heart-box" id="heart1">♡</div>
+        <div class="heart-box" id="heart2">♡</div>
+        <div class="heart-box" id="heart3">♡</div>
+        <div class="heart-box" id="heart4">♡</div>
       </div>
 
       <div class="hint" id="hint">&nbsp;</div>
@@ -58,10 +365,100 @@
         Happy 7th Anniversary! 🌹<br>
         Every Day and Every Month with you is a gift. ❤️
       </div>
-      <a href="continue.html" class="gift-btn">Continue 🤍</a>
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <div id="popup" class="popup hidden">
+  <div class="popup-box">
+    <img id="popupImage" src="" alt="emoji" class="popup-image">
+    <h2 id="popupTitle"></h2>
+    <p id="popupMessage"></p>
+  </div>
+</div>
+
+<script>
+const CODE = "0718";
+const REDIRECT_URL = "continue.html"; // change this to your next page
+const REDIRECT_DELAY = 1800; // ms before auto-continuing on success
+
+let entered = "";
+
+const hint = document.getElementById('hint');
+const card = document.querySelector('.card');
+const hearts = document.querySelectorAll(".heart-box");
+
+const popup = document.getElementById("popup");
+const popupTitle = document.getElementById("popupTitle");
+const popupMessage = document.getElementById("popupMessage");
+const popupImage = document.getElementById("popupImage");
+
+function renderDisplay(){
+  hearts.forEach((heart, index) => {
+    if(index < entered.length){
+      heart.textContent = entered[index];
+      heart.classList.add("filled");
+    } else {
+      heart.textContent = "♡";
+      heart.classList.remove("filled");
+    }
+  });
+}
+
+function press(num){
+  if(entered.length >= 4) return;
+  entered += num;
+  renderDisplay();
+  hint.textContent = '\u00A0';
+
+  if(entered.length === 4){
+    setTimeout(submitCode, 100);
+  }
+}
+
+function deleteLast(){
+  entered = entered.slice(0, -1);
+  renderDisplay();
+  hint.textContent = '\u00A0';
+}
+
+function submitCode(){
+  if(entered.length === 0) return;
+
+  if(entered === CODE){
+    unlock();
+  } else {
+    popup.classList.remove("hidden");
+    popupImage.src = "crying.gif";
+popupTitle.textContent = "Access Denied";
+popupMessage.textContent = "Wrong date, try again.";
+    card.classList.add("shake");
+
+    setTimeout(() => {
+      popup.classList.add("hidden");
+      card.classList.remove("shake");
+      entered = "";
+      renderDisplay();
+    }, 1500);
+  }
+}
+
+function unlock(){
+  popup.classList.remove("hidden");
+  popupImage.src = "success.gif";
+popupTitle.textContent = "Access Granted";
+popupMessage.textContent = "Welcome, My Love!";
+  // auto-continue to the next page after a short delay
+  setTimeout(() => {
+    window.location.href = REDIRECT_URL;
+  }, REDIRECT_DELAY);
+}
+
+// allow keyboard typing too
+document.addEventListener('keydown', (e) => {
+  if(/^[0-9]$/.test(e.key)) press(e.key);
+  if(e.key === 'Backspace') deleteLast();
+  if(e.key === 'Enter') submitCode();
+});
+</script>
 </body>
 </html>
